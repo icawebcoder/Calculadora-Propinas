@@ -1,14 +1,17 @@
 import { useMemo } from "react"
 import { OrderItem } from "../types"
 import { formatCurrency } from "../helpers"
+import { Dispatch } from "react"
+import { OrderActions } from "../reducers/order-reducers"
+
 
 type OrderTotalProps = {
     order: OrderItem[],
     tip: number,
-    placeOrder: () => void
+    dispatch: Dispatch<OrderActions>
 }
 
-export default function OrderTotal({ order, tip, placeOrder }: OrderTotalProps) {
+export default function OrderTotal({ order, tip, dispatch }: OrderTotalProps) {
 
     // Como alternativa, se puede utilizar useCallback de useMemo, hay que importarlo y un ejemplo sería el siguiente
     // const tipAmount = useCallback(() => subtotalAmount() * tip, [tip, order])
@@ -30,7 +33,7 @@ export default function OrderTotal({ order, tip, placeOrder }: OrderTotalProps) 
             <button
                 className="w-full bg-black p-3 uppercase text-white font-bold mt-10 disabled:opacity-10"
                 disabled={totalAmount === 0}
-                onClick={placeOrder}
+                onClick={() => dispatch({ type: 'place-order' })}
             >
                 Guardar Orden
             </button>

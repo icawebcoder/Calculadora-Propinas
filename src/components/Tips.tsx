@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch } from "react"
+import { OrderActions } from "../reducers/order-reducers"
 
 const tipOptions = [
     {
@@ -19,11 +20,11 @@ const tipOptions = [
 ]
 
 type TipsProps = {
-    setTip: Dispatch<SetStateAction<number>>
+    dispatch: Dispatch<OrderActions>
     tip: number
 }
 
-export default function Tips({ setTip, tip }: TipsProps) {
+export default function Tips({ dispatch, tip }: TipsProps) {
     return (
         <div>
             <h3 className="font-black text-2xl">
@@ -40,7 +41,7 @@ export default function Tips({ setTip, tip }: TipsProps) {
                             value={tipOption.value}
                             // Ponemos el + delante para evitar el conflicto de tipado que genera 
                             // TypeScript, ya que lo convierte de String a un núnmero en este caso
-                            onChange={e => setTip(+e.target.value)}
+                            onChange={e => dispatch({ type: 'add-tip', payload: { value: +e.target.value } })}
                             checked={tipOption.value === tip}
                         />
                     </div>
